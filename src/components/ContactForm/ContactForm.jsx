@@ -8,7 +8,7 @@ const FormContainer = styled.form`
   border: 1px solid #000;
   border-radius: 10px;
   padding: 30px;
-  background-image: url('https://github.com/MadDog83/goit-react-hw-02-phonebook/blob/main/public/images/phonebook.jpg');
+  background-image: url('/images/phonebook.png');
   background-size: cover;
   background-repeat: no-repeat;
 `;
