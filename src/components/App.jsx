@@ -2,6 +2,16 @@ import React, { useState } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
+import styled from 'styled-components';
+
+const CenteredContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
+
 
 export const App = () => {
   const [contacts, setContacts] = useState([]);
@@ -32,12 +42,12 @@ export const App = () => {
   );
 
   return (
-    <div>
+    <CenteredContainer>
       <h1>Phonebook</h1>
       <ContactForm onAdd={handleAddContact} />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={handleFilterChange} />
       <ContactList contacts={filteredContacts} onDelete={deleteContact} />
-    </div>
+    </CenteredContainer>
   );
 };
