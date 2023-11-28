@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
@@ -12,42 +12,51 @@ const CenteredContainer = styled.div`
   height: 100vh;
 `;
 
-
-export const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
-  
-  const deleteContact = (id) => {
-    setContacts(contacts.filter(contact => contact.id !== id));
+class App extends Component {
+  state = {
+    contacts: [],
+    filter: '',
   };
-  
-  const handleAddContact = (newContact) => {
-    const doesExist = contacts.some(
+
+  deleteContact = (id) => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id)
+    }));
+  };
+
+  handleAddContact = (newContact) => {
+    const doesExist = this.state.contacts.some(
       contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
     );
-  
+
     if (doesExist) {
       alert(`${newContact.name} is already in contacts.`);
     } else {
-      setContacts([newContact, ...contacts]);
+      this.setState(prevState => ({
+        contacts: [newContact, ...prevState.contacts]
+      }));
     }
   };
 
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value);
+  handleFilterChange = (event) => {
+    this.setState({ filter: event.target.value });
   };
 
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  render() {
+    const filteredContacts = this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+    );
 
-  return (
-    <CenteredContainer>
-      <h1>Phonebook</h1>
-      <ContactForm onAdd={handleAddContact} />
-      <h2>Contacts</h2>
-      <Filter value={filter} onChange={handleFilterChange} />
-      <ContactList contacts={filteredContacts} onDelete={deleteContact} />
-    </CenteredContainer>
-  );
+    return (
+      <CenteredContainer>
+        <h1>Phonebook</h1>
+        <ContactForm onAdd={this.handleAddContact} />
+        <h2>Contacts</h2>
+        <Filter value={this.state.filter} onChange={this.handleFilterChange} />
+        <ContactList contacts={filteredContacts} onDelete={this.deleteContact} />
+      </CenteredContainer>
+    );
+  }
 };
+
+export default App;

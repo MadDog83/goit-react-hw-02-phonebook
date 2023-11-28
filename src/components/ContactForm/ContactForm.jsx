@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import styled from 'styled-components';
+
 
 const FormContainer = styled.form`
   display: flex;
@@ -45,44 +46,54 @@ const AddButton = styled.button`
 }
 `;
 
-const ContactForm = ({ onAdd }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onAdd({ id: nanoid(), name, number });
-    setName('');
-    setNumber('');
+class ContactForm extends Component {
+    state = {
+      name: '',
+      number: '',
+    };
+  
+    handleSubmit = (event) => {
+      event.preventDefault();
+      this.props.onAdd({ id: nanoid(), name: this.state.name, number: this.state.number });
+      this.setState({ name: '', number: '' });
+    };
+  
+    handleNameChange = (event) => {
+      this.setState({ name: event.target.value });
+    };
+  
+    handleNumberChange = (event) => {
+      this.setState({ number: event.target.value });
+    };
+  
+    render() {
+      return (
+        <FormContainer onSubmit={this.handleSubmit}>
+          <LabelName>
+            <StyledName>Name:</StyledName>
+            <InputName
+              type="text"
+              value={this.state.name}
+              onChange={this.handleNameChange}
+              required
+              placeholder="Name"
+            />
+          </LabelName>
+          <LabelName>
+            <StyledNumber>Number:</StyledNumber>
+            <InputName
+              type="tel"
+              pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
+              placeholder="222-22-22"
+              value={this.state.number}
+              onChange={this.handleNumberChange}
+              required
+            />
+          </LabelName>
+          <AddButton type="submit">Add contact</AddButton>
+        </FormContainer>
+      );
+    }
   };
-
-  return (
-    <FormContainer onSubmit={handleSubmit}>
-      <LabelName>
-        <StyledName>Name:</StyledName>
-        <InputName
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          placeholder="Name"
-        />
-      </LabelName>
-      <LabelName>
-        <StyledNumber>Number:</StyledNumber>
-        <InputName
-          type="tel"
-          pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
-          placeholder="222-22-22"
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
-          required
-        />
-      </LabelName>
-      <AddButton type="submit">Add contact</AddButton>
-    </FormContainer>
-  );
-};
-
-
-export default ContactForm;
+  
+  export default ContactForm;
