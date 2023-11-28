@@ -1,7 +1,13 @@
 import ContactListItem from '../ContactListItem/ContactListItem';
+import styled from 'styled-components';
+
+const ItemList = styled.ul`
+ list-style: none;
+ color: #972525;
+`;
 
 const ContactList = ({ contacts, onDelete }) => (
-    <ul>
+    <ItemList>
       {contacts.map((contact) => (
         <ContactListItem
           key={contact.id}
@@ -9,7 +15,7 @@ const ContactList = ({ contacts, onDelete }) => (
           onDelete={() => onDelete(contact.id)}
         />
       ))}
-    </ul>
+    </ItemList>
   );
 
 export default ContactList;

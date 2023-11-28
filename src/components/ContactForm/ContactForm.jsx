@@ -9,16 +9,18 @@ const FormContainer = styled.form`
   border: 1px solid #000;
   border-radius: 10px;
   padding: 30px;
-  background-image: url('/images/phonebook.png');
+  background-image: url('https://cdn.pixabay.com/photo/2014/08/24/19/01/apps-426559_1280.jpg');
   background-size: cover;
   background-repeat: no-repeat;
 `;
 const StyledName = styled.span`
-
+color: white;
+font-weight: bold;
 `;
 
 const StyledNumber = styled.span`
-
+color: white;
+font-weight: bold;
 `;
 
 const LabelName = styled.label`
@@ -41,8 +43,9 @@ const AddButton = styled.button`
     transition: background-color 0.3s ease;
 
     &:hover, &:focus {
-    background-color: #6fd68c;
+    background-color: #18c944;
     color: white;
+    cursor: pointer;
 }
 `;
 
