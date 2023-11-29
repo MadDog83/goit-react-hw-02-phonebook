@@ -66,7 +66,10 @@ class ContactForm extends Component {
     };
   
     handleNumberChange = (event) => {
-      this.setState({ number: event.target.value });
+      let input = event.target.value;
+      input = input.replace(/\D/g, "").slice(0, 8); 
+      input = input.replace(/(\d{3})(\d{2})(\d{2})/, "$1-$2-$3"); 
+      this.setState({ number: input });
     };
   
     render() {
